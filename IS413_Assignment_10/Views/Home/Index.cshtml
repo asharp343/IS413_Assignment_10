@@ -2,7 +2,47 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Header{
+    <div class="text-center">
+        <h1 class="display-4 mt-2">Bowling League</h1>
+        <h3 mb-5>@Model.Team</h3>
+    </div>
+}
+
+@model IndexViewModel
+
+<table class="table table-striped thead-dark tableCustom">
+    <tr>
+        <th>First Name</th>
+        <th>Middle Initial</th>
+        <th>Last Name</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th>Phone Number</th>
+    </tr>
+    @foreach (Bowler bowler in Model.Bowlers)
+    {
+        <tr>
+            <td>@bowler.BowlerFirstName</td>
+            <td>@bowler.BowlerMiddleInit</td>
+            <td>@bowler.BowlerLastName</td>
+            <td>@bowler.BowlerAddress</td>
+            <td>@bowler.BowlerCity</td>
+            <td>@bowler.BowlerState</td>
+            <td>@bowler.BowlerZip</td>
+            <td>@bowler.BowlerPhoneNumber</td>
+        </tr>
+    }
+
+</table>
+
+@section Pagination {
+    <div page-info="@Model.PageNumberInfo" page-url-teamname="@Model.Team"
+         page-classes-enabled="true" page-class="btn ml-1 mr-1 pl-3 pr-3 mb-5"
+         page-class-normal="btn-outline-secondary" page-class-selected="btn-info text-white">
+
+    </div>
+}
+

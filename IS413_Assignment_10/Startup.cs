@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IS413_Assignment_10.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +26,10 @@ namespace IS413_Assignment_10
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<BowlingLeagueContext>(options =>
+                options.UseSqlite(Configuration["ConnectionStrings:BowlingLeagueDbConnection"])
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +54,23 @@ namespace IS413_Assignment_10
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapControllerRoute("teamteamid",
+                    "team/{teamid}/{team}",
+                    new { Controller = "Home", action = "Index", pagenum = 1 }
+                );
+
+                endpoints.MapControllerRoute("teampagenum,",
+                    "team/{teamid}/{team}/{pagenum}",
+                    new { Controller = "Home", action = "Index" }
+                );
+
+                endpoints.MapControllerRoute("pagenum",
+                    "{pagenum}",
+                    new { Controller = "Home", action = "Index" }
+                );
+
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
